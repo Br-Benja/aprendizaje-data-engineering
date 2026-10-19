@@ -4,3 +4,8 @@
 
 -- Escribe tu consulta aquÃ­:
 
+select categoria, 
+count(categoria) as numero_productos 
+from productos 
+group by categoria, 
+having count(categoria)>6 ; 

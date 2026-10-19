@@ -4,4 +4,9 @@
 -- Conceptos: GROUP BY, COUNT, AVG
 
 -- Escribe tu consulta aquí:
+select categoria,
+COUNT(categoria) as numero_productos,
+ROUND(AVG(precio),2) as precio_promedio 
+from productos 
+group by categoria;
 

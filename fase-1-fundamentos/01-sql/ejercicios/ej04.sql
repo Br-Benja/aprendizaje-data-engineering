@@ -7,3 +7,19 @@
 
 -- Escribe tu consulta aquí:
 
+SELECT 
+    c.nombre, 
+    p.pedido_id,
+    p.fecha_pedido, 
+    ROUND(SUM(dp.cantidad * dp.precio_unitario), 2) AS total
+FROM clientes AS c
+JOIN pedidos AS p 
+    ON c.cliente_id = p.cliente_id
+JOIN detalle_pedidos AS dp 
+    ON dp.pedido_id = p.pedido_id
+GROUP BY 
+    c.nombre, 
+    p.pedido_id, 
+    p.fecha_pedido
+ORDER BY total DESC
+LIMIT 10;

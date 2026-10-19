@@ -4,3 +4,8 @@
 
 -- Escribe tu consulta aquÃ­:
 
+select c.cliente_id, c.nombre, c.pais 
+from clientes as c 
+left join pedidos as p 
+on p.cliente_id = c.cliente_id 
+where p.pedido_id is null;
