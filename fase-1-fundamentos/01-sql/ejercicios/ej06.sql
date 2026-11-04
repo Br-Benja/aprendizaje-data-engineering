@@ -6,5 +6,14 @@
 -- Ordena por mes.
 -- Conceptos: funciones de fecha, COUNT(DISTINCT ...)
 
--- Escribe tu consulta aquí:
+-- Escribe tu consulta aquí: 
 
+
+select DATE_TRUNC('month',fecha_pedido) as mes, 
+ROUND(SUM(dp.cantidad * dp.precio_unitario),2) as TOTAL  
+from pedidos as p 
+JOIN detalle_pedidos as dp 
+ON dp.pedido_id = p.pedido_id 
+WHERE p.estado = 'completado' AND p.fecha_pedido >= DATE '2025-01-01' AND p.fecha_pedido <= DATE '2026-01-01'  
+GROUP BY mes 
+ORDER BY mes;
