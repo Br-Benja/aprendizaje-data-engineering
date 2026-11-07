@@ -5,19 +5,27 @@
 -- Conceptos: CTE (WITH ...), subconsulta escalar
 
 -- Escribe tu consulta aquí:
-SELECT 
-    c.cliente_id, 
-    c.nombre, 
-    SUM(dp.precio_unitario) AS total
-FROM clientes AS c
-JOIN pedidos AS p 
-    ON c.cliente_id = p.cliente_id
-JOIN detalle_pedidos AS dp 
-    ON dp.pedido_id = p.pedido_id
-WHERE p.estado = 'completado'
-GROUP BY c.cliente_id, c.nombre
-HAVING SUM(dp.precio_unitario) > (
-    SELECT AVG(precio_unitario) FROM detalle_pedidos
+WITH gasto_por_cliente AS (
+    SELECT
+        c.cliente_id,
+        c.nombre,
+        SUM(dp.precio_unitario * dp.cantidad) AS total
+    FROM clientes AS c
+    JOIN pedidos AS p
+        ON c.cliente_id = p.cliente_id
+    JOIN detalle_pedidos AS dp
+        ON dp.pedido_id = p.pedido_id
+    WHERE p.estado = 'completado'
+    GROUP BY c.cliente_id, c.nombre
 )
 
-ORDER BY c.cliente_id;
+SELECT
+    cliente_id,
+    nombre,
+    total
+FROM gasto_por_cliente
+WHERE total > (
+    SELECT AVG(total)
+    FROM gasto_por_cliente
+)
+ORDER BY cliente_id;

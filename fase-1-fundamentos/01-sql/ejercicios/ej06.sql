@@ -10,7 +10,8 @@
 
 
 select DATE_TRUNC('month',fecha_pedido) as mes, 
-ROUND(SUM(dp.cantidad * dp.precio_unitario),2) as TOTAL  
+ROUND(SUM(dp.cantidad * dp.precio_unitario),2) as TOTAL, 
+COUNT(DISTINCT dp.pedido_id)
 from pedidos as p 
 JOIN detalle_pedidos as dp 
 ON dp.pedido_id = p.pedido_id 
