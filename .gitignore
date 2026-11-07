@@ -5,3 +5,5 @@ __pycache__/
 *.duckdb.wal
 .env
 .vscode/
+datos/
+.pytest_cache/

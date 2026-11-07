@@ -7,7 +7,7 @@ Vengo de Ingeniería en Sistemas y estoy construyendo las bases para trabajar co
 
 ### Fase 1 — Fundamentos (semanas 1-6)
 - [ ] [01 · SQL de cero a window functions](fase-1-fundamentos/01-sql/)
-- [ ] 02 · Python para datos (pandas, APIs, Parquet, tests)
+- [ ] [02 · Python para datos: mi primer pipeline ETL](fase-1-fundamentos/02-python/)
 - [ ] 03 · Git, Linux/bash y Docker
 
 ### Fase 2 — Modelado y almacenamiento (semanas 7-10)
@@ -31,7 +31,7 @@ Vengo de Ingeniería en Sistemas y estoy construyendo las bases para trabajar co
 - [ ] Proyecto 3: streaming
 
 ## 🧰 Stack
-`SQL` `Python` `DuckDB` `Git` — se irá ampliando con Docker, dbt, Airflow, Spark y la nube.
+`SQL` `Python` `DuckDB` `pandas` `Parquet` `pytest` `REST APIs` `Git` — se irá ampliando con Docker, dbt, Airflow, Spark y la nube.
 
 ## ▶️ Cómo usar este repo
 
