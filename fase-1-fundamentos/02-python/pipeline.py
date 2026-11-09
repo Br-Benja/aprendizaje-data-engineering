@@ -28,7 +28,14 @@ def construir_parametros(latitud: float, longitud: float, inicio: str, fin: str)
       timezone  -> "America/Mexico_City"
     Pista: ",".join(lista)
     """
-    raise NotImplementedError("TODO ejercicio 1")
+    return {
+        "latitude": latitud,
+        "longitude" : longitud,
+        "start_date" : inicio,
+        "end_date" : fin, 
+        "daily": ",".join(VARIABLES),
+        "timezone" : "America/Mexico_City"
+    }
 
 
 def extraer(latitud: float, longitud: float, inicio: str, fin: str) -> dict:
@@ -38,7 +45,15 @@ def extraer(latitud: float, longitud: float, inicio: str, fin: str) -> dict:
     - Llama a .raise_for_status() para que un error HTTP (404, 500) lance excepción
     - Regresa .json()
     """
-    raise NotImplementedError("TODO ejercicio 7")
+    respuesta = requests.get( 
+        URL_API,
+        params = construir_parametros(latitud,longitud, inicio, fin),
+        timeout = 30
+    )
+    respuesta.raise_for_status()
+    return respuesta.json()
+
+
 
 
 # ============================================================== TRANSFORM
