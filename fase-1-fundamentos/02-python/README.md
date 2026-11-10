@@ -113,4 +113,27 @@ def test_suma():
 - Escribe un test nuevo para tu cambio.
 
 ## 📝 Lo que aprendí
-*(Con tus palabras: ¿qué es idempotencia? ¿Por qué Parquet? ¿Qué parte te costó más?)*
+## 📝 Lo que aprendí
+
+**Construí mi primer pipeline ETL completo:** descarga el clima de 2025 de tres ciudades
+desde una API, limpia los datos con pandas, calcula columnas, genera un resumen mensual
+y lo guarda en Parquet. Escribí las 7 funciones yo mismo y las validé con 16 tests de pytest.
+
+- **pandas:** aprendí a trabajar con tablas en Python (DataFrames) y a hacer operaciones
+  sobre columnas completas sin usar `for`. También descubrí que el `groupby` es el
+  equivalente del `GROUP BY` de SQL.
+- **Limpieza de datos:** aprendí a decidir cuándo eliminar un dato vacío y cuándo
+  rellenarlo, y que es una decisión de negocio: rellenar una temperatura con 0 sería
+  inventar un dato falso.
+- **Idempotencia:** un pipeline es idempotente si correrlo 1 o 10 veces deja los datos
+  exactamente igual, sin duplicados. Es lo mismo que logré antes en PostgreSQL con
+  `ON CONFLICT DO UPDATE`.
+- **Parquet vs CSV:** solo conocía CSV. Parquet es un formato binario, comprimido y
+  columnar que conserva los tipos de datos; es el estándar en data lakes. CSV y JSON son
+  texto, más fáciles de leer para una persona.
+- **Tests:** aprendí que un test que pasa no garantiza que el código esté bien, y que
+  después de cualquier cambio hay que correr todos los tests para detectar regresiones.
+
+**Lo que más me costó:** aprender tantos conceptos nuevos a la vez y entender su
+estructura, porque era la primera vez que los usaba. Lo que más me ayudó fue practicar
+cada concepto con un ejemplo pequeño antes de usarlo en el pipeline.

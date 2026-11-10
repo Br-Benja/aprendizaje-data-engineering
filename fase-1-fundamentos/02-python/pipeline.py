@@ -69,7 +69,13 @@ def a_dataframe(respuesta: dict) -> pd.DataFrame:
     Columnas resultantes, en este orden:
       fecha (tipo datetime, usa pd.to_datetime), temp_max, temp_min, precipitacion
     """
-    raise NotImplementedError("TODO ejercicio 2")
+    data = respuesta["daily"]
+    return pd.DataFrame({
+        "fecha" : pd.to_datetime(data["time"]),
+        "temp_max" : data["temperature_2m_max"],
+        "temp_min" : data["temperature_2m_min"],
+        "precipitacion" : data["precipitation_sum"]
+    })
 
 
 def limpiar(df: pd.DataFrame) -> pd.DataFrame:
@@ -80,8 +86,15 @@ def limpiar(df: pd.DataFrame) -> pd.DataFrame:
     3. Si una fecha está repetida, quédate con la ÚLTIMA aparición -> drop_duplicates(..., keep="last")
     4. Ordena por fecha y reinicia el índice                       -> sort_values / reset_index(drop=True)
     """
-    raise NotImplementedError("TODO ejercicio 3")
-
+    limpio = ( 
+        df
+        .dropna(subset=["temp_max","temp_min"])
+        .fillna({"precipitacion" : 0.0})
+        .drop_duplicates(subset="fecha", keep = "last")
+        .sort_values("fecha")
+        .reset_index(drop = True)
+    )
+    return limpio
 
 def agregar_columnas(df: pd.DataFrame, ciudad: str) -> pd.DataFrame:
     """EJERCICIO 4 — Agrega columnas calculadas (sin modificar el df original: usa df.copy()).
@@ -90,8 +103,12 @@ def agregar_columnas(df: pd.DataFrame, ciudad: str) -> pd.DataFrame:
       llovio        -> True si precipitacion > 0
       ciudad        -> el nombre recibido
     """
-    raise NotImplementedError("TODO ejercicio 4")
+    df = df.copy()
+    df["temp_promedio"] = ((df["temp_max"] + df["temp_min"])/2).round(1)
+    df["llovio"] = df["precipitacion"] > 0
+    df["ciudad"] = ciudad
 
+    return df
 
 def resumen_mensual(df: pd.DataFrame) -> pd.DataFrame:
     """EJERCICIO 5 — El GROUP BY de pandas. Recibe el df con las columnas del ejercicio 4.
@@ -103,7 +120,21 @@ def resumen_mensual(df: pd.DataFrame) -> pd.DataFrame:
     Ordenado por ciudad y mes, con índice reiniciado.
     Pista: df.groupby([...], as_index=False).agg(nombre=("columna", "funcion"), ...)
     """
-    raise NotImplementedError("TODO ejercicio 5")
+    resumen = (
+        df
+        .assign(mes = df["fecha"].dt.strftime("%Y-%m"))
+        .groupby(["ciudad", "mes"], as_index = False)
+        .agg(
+            temp_promedio = ("temp_promedio", "mean"),
+            precipitacion_total = ("precipitacion", "sum"),
+            dias_lluvia = ("llovio", "sum"),
+        )
+        .round({"temp_promedio" : 1, "precipitacion_total" : 1})
+        .sort_values(["ciudad", "mes"])
+        .reset_index(drop=True)
+    )
+
+    return resumen
 
 
 # ============================================================== LOAD
@@ -114,7 +145,12 @@ def guardar_parquet(df: pd.DataFrame, ruta: Path) -> None:
     - No guardes el índice: index=False
     - Correrlo dos veces debe dar el mismo resultado (sobrescribir, no duplicar) = IDEMPOTENCIA
     """
-    raise NotImplementedError("TODO ejercicio 6")
+
+    ruta = Path(ruta)
+    ruta.parent.mkdir(parents = True, exist_ok=True)
+    df.to_parquet(ruta, index=False)
+
+
 
 
 # ============================================================== ORQUESTACIÓN (ya está hecha)

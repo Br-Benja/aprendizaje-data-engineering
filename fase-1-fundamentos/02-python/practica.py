@@ -215,3 +215,190 @@
 #posts = extraer_posts(1)
 #print(len(posts))
 #print(posts[0]["title"])
+
+
+############ PASO 11: PANDAS, TABLAS DENTRO DE PYTHON ############### 
+
+#import pandas as pd
+
+#datos = {
+#   "fecha": ["2025-06-01", "2025-06-02", "2025-06-03"],
+#    "temp_max": [27.6, 27.1, 27.1],
+#    "temp_min": [15.4, 16.5, 15.5],
+#}
+
+#df = pd.DataFrame(datos)
+#print(df)
+
+#print(df["temp_max"])          # una columna
+#print(len(df))                 # cuántas filas → 3
+#print(df["temp_max"].mean())   # promedio de la columna → 27.27
+
+#df["temp_promedio"] = (df["temp_max"] + df["temp_min"]) / 2   # columna nueva
+#print(df)
+
+#import pandas as pd
+#datos = {
+#    "fecha" : ["2025-06-01", "2025-06-02", "2025-06-03"],
+#    "temp_max" :[31.0, 33.0, 33.6],
+#    "lluvia" :[2.1, 0.0, 0.3]
+#}
+
+#df = pd.DataFrame(datos)
+
+#print(df)
+
+#total_lluvia = df["lluvia"].sum()
+#print(total_lluvia)
+
+#df["llovio"] = df["lluvia"] > 0
+
+#print(df)
+
+
+########### Paso 12: Convertir la respuesta de la API en tabla (ejercicio 2) 🏗️ #######
+
+
+#import pandas as pd
+
+#respuesta_ventas = {
+#   "tienda": "Centro",
+#    "data": {
+#        "day": ["2025-03-01", "2025-03-02"],
+#        "total_sales_mxn": [1500.0, 2300.5],
+#        "items_sold": [12, 20],
+#    }
+#}
+
+#def ventas_a_dataframe(respuesta):
+#    data = respuesta["data"]
+#    return pd.DataFrame({
+#        "fecha": pd.to_datetime(data["day"]),
+#        "ventas": data["total_sales_mxn"],
+#        "piezas": data["items_sold"],
+#    })
+
+#df = ventas_a_dataframe(respuesta_ventas)
+#print(df)
+#print(df.dtypes)
+
+########### Paso 13: Datos sucios, parte 1: valores vacíos 🧹 ###########
+
+import pandas as pd
+
+#ventas = pd.DataFrame({
+#    "tienda": ["Centro", "Norte", "Sur", "Este"],
+#    "ventas": [1500.0, None, 2300.5, 980.0],
+#    "descuento": [100.0, 50.0, None, None],
+#})
+#print(ventas)
+#print("") 
+
+#sin_vacios = ventas.dropna(subset=["ventas"])
+#print(sin_vacios)
+#print("")
+
+#rellenado = ventas.fillna({"descuento": 0.0})
+#print(rellenado)
+#print("")
+#limpio = ventas.dropna(subset=["ventas"]).fillna({"descuento": 0.0})
+
+#print(limpio)
+
+#clima = pd.DataFrame({
+#    "fecha": ["2025-06-01", "2025-06-02", "2025-06-03", "2025-06-04"],
+#    "temp_max": [31.0, None, 33.6, 32.5],
+#    "lluvia": [2.1, 0.0, None, 0.0],
+#})
+
+#print(clima)
+#print("")
+
+#sin_vacios = clima.dropna(subset={"temp_max"})
+#print(sin_vacios)
+#print("")
+
+#relleno = clima.fillna({"lluvia" : 0.0})
+#print(relleno)
+#rint("")
+
+#clima_limpio = clima.dropna(subset={"temp_max"}).fillna({"lluvia" : 0.0})
+#print(clima_limpio)
+
+####### Paso 14: Datos sucios, parte 2: duplicados y orden 🧹 #############
+
+#ventas = pd.DataFrame({
+#    "fecha": ["2025-03-03", "2025-03-01", "2025-03-02", "2025-03-02"],
+#    "ventas": [800.0, 1500.0, 2000.0, 2300.5],
+#})
+#print(ventas)
+#print("")
+
+#limpio = (
+#    ventas
+#    .drop_duplicates(subset="fecha", keep="last") #si pongo en keep first se queda con el primero que llegue
+#    .sort_values("fecha")
+#    .reset_index(drop=True)
+#)
+#print(limpio)
+
+############### Paso 15: Columnas calculadas (ejercicio 4) ➕ ##############
+
+#def agregar_iva(df, tienda):
+#    df = df.copy()                                   # 📋 fotocopia; el original queda intacto
+#    df["con_iva"] = (df["precio"] * 1.16).round(2)   # columna calculada y redondeada
+#    df["caro"] = df["precio"] > 1000                 # columna True/False
+#    df["tienda"] = tienda                            # el MISMO valor para todas las filas
+#    return df
+
+#productos = pd.DataFrame({"precio": [500.0, 1200.0]})
+#resultado = agregar_iva(productos, "Centro")
+#print(resultado)
+#print("")
+#print(productos)      # ← el original sigue sin cambios
+
+########### Paso 16: Agrupar datos, el GROUP BY de pandas 📊 #############
+
+ventas = pd.DataFrame({
+    "tienda": ["Centro", "Norte", "Centro", "Norte", "Centro"],
+    "fecha": pd.to_datetime(["2025-03-01", "2025-03-01", "2025-03-15", "2025-04-02", "2025-04-10"]),
+    "ventas": [1500.0, 900.0, 2300.5, 1100.0, 800.0],
+    "con_descuento": [True, False, True, False, False],
+})
+
+#resumen = ventas.groupby("tienda", as_index=False).agg(
+#    ventas_total=("ventas", "sum"),
+#    venta_promedio=("ventas", "mean"),
+#)
+#print(resumen)
+
+#resumen = (
+#    ventas
+#    .assign(mes=ventas["fecha"].dt.strftime("%Y-%m"))        # 🆕 crea la columna sin modificar el original
+#    .groupby(["tienda", "mes"], as_index=False)
+#    .agg(
+#        ventas_total=("ventas", "sum"),
+#        venta_promedio=("ventas", "mean"),
+#        dias_con_descuento=("con_descuento", "sum"),         # 🧠 sumar True/False = contar los True
+#    )
+#    .round({"venta_promedio": 1})                            # 🆕 redondea solo esa columna
+#    .sort_values(["tienda", "mes"])
+#    .reset_index(drop=True)
+#)
+#print(resumen)
+
+#################### Paso 17: Guardar los datos (ejercicio 6) 💾 #################3
+
+#from pathlib import Path
+#import pandas as pd
+
+#def guardar_csv(df, ruta):
+#    ruta = Path(ruta)
+#    ruta.parent.mkdir(parents=True, exist_ok=True)
+#    df.to_csv(ruta, index=False)
+
+#ventas = pd.DataFrame({"tienda": ["Centro", "Norte"], "ventas": [1500.0, 900.0]})
+#guardar_csv(ventas, "reportes/marzo/ventas.csv")
+
+########## Paso 18: ¡Correr tu pipeline con datos reales! 🚀 #################
+

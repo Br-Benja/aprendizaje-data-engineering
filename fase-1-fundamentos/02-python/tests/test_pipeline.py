@@ -107,6 +107,13 @@ def test_ej4_columnas_nuevas():
     assert (df["ciudad"] == "Celaya").all()
 
 
+def test_ej4_redondea_a_un_decimal():
+    base = pd.DataFrame({"fecha": pd.to_datetime(["2025-01-01"]), "temp_max": [26.0],
+                         "temp_min": [8.36], "precipitacion": [0.0]})
+    df = pipeline.agregar_columnas(base, "Celaya")
+    assert df.loc[0, "temp_promedio"] == 17.2, "(26.0 + 8.36) / 2 = 17.18 → redondeado a 1 decimal = 17.2"
+
+
 def test_ej4_no_modifica_el_original():
     base = pd.DataFrame({"fecha": pd.to_datetime(["2025-01-01"]), "temp_max": [20.0],
                          "temp_min": [10.0], "precipitacion": [0.0]})
