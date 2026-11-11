@@ -6,8 +6,8 @@ Vengo de Ingeniería en Sistemas y estoy construyendo las bases para trabajar co
 ## 📍 Progreso
 
 ### Fase 1 — Fundamentos (semanas 1-6)
-- [ ] [01 · SQL de cero a window functions](fase-1-fundamentos/01-sql/)
-- [ ] [02 · Python para datos: mi primer pipeline ETL](fase-1-fundamentos/02-python/)
+- [X] [01 · SQL de cero a window functions](fase-1-fundamentos/01-sql/)
+- [X] [02 · Python para datos: mi primer pipeline ETL](fase-1-fundamentos/02-python/)
 - [ ] 03 · Git, Linux/bash y Docker
 
 ### Fase 2 — Modelado y almacenamiento (semanas 7-10)

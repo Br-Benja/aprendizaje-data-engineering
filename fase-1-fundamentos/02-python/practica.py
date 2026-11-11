@@ -402,3 +402,20 @@ ventas = pd.DataFrame({
 
 ########## Paso 18: ¡Correr tu pipeline con datos reales! 🚀 #################
 
+########################## Paso 19: ¿Cómo funciona un test? 🧪 ################
+
+
+
+#def test_ej4_redondea_a_un_decimal():
+#    # 1. PREPARAR: los datos de entrada
+#    base = pd.DataFrame({"fecha": pd.to_datetime(["2025-01-01"]), "temp_max": [26.0],
+#                         "temp_min": [8.36], "precipitacion": [0.0]})
+
+    # 2. EJECUTAR: llamar a la función que quieres probar
+    #df = pipeline.agregar_columnas(base, "Celaya")
+
+    # 3. VERIFICAR: revisar que el resultado sea el esperado
+    #assert df.loc[0, "temp_promedio"] == 17.2
+
+
+   

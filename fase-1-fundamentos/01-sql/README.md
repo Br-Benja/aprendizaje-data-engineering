@@ -126,5 +126,5 @@ SELECT * FROM r WHERE rn <= 2;
 - Marca esta lección como completada en el README principal, haz commit y súbelo a GitHub.
 
 ## 📝 Lo que aprendí
-Aprendi a usar nuevas funciones que no cononocia antes como el PARTITION BY, LAG(), ROW_NUMBER(), DATE_DIFF, ya que no tenia conocimiento de estas funciones y la verdad me sirvio para conocer un poco mas sobre el manejo de las consultas de base de datos.
+Aprendí a usar nuevas funciones que no conocía antes como el PARTITION BY, LAG(), ROW_NUMBER(), DATE_DIFF, ya que no tenía conocimiento de estas funciones y la verdad me sirvió para conocer un poco más sobre el manejo de las consultas de base de datos.
 

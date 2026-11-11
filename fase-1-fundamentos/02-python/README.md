@@ -113,7 +113,6 @@ def test_suma():
 - Escribe un test nuevo para tu cambio.
 
 ## 📝 Lo que aprendí
-## 📝 Lo que aprendí
 
 **Construí mi primer pipeline ETL completo:** descarga el clima de 2025 de tres ciudades
 desde una API, limpia los datos con pandas, calcula columnas, genera un resumen mensual
